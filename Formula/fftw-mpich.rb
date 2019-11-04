@@ -3,6 +3,7 @@ class FftwMpich < Formula
   homepage "http://www.fftw.org"
   url "http://fftw.org/fftw-3.3.8.tar.gz"
   sha256 "6113262f6e92c5bd474f2875fa1b01054c4ad5040f6b0da7c03c98821d9ae303"
+  revision 1
 
   depends_on "gcc"
   depends_on "mpich"
@@ -19,7 +20,10 @@ class FftwMpich < Formula
       "--enable-mpi",
       "--enable-openmp",
     ]
-    simd_args = ["--enable-sse2"]
+
+    # FFTW supports runtime detection of CPU capabilities, so it is safe to
+    # use with --enable-avx and the code will still run on all CPUs
+    simd_args = ["--enable-sse2", "--enable-avx"]
 
     # single precision
     # enable-sse2, enable-avx and enable-avx2 work for both single and double precision
